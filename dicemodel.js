@@ -1,21 +1,3 @@
-<!DOCTYPE html>
-<!--
-Created using JS Bin
-http://jsbin.com
-
-Copyright (c) 2016 by kevinfjbecker (http://jsbin.com/hefoji/6/edit)
-
-Released under the MIT license: http://jsbin.mit-license.org
--->
-<meta name="robots" content="noindex">
-<html>
-  <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-    <meta charset="utf-8">
-    <title>JS Bin</title>
-  </head>
-  <body>
-  <script id="jsbin-javascript">
 // Descent Dice Combination Explorer
 
 /////////////////////////////////////////////////////////////// Descent Dice //
@@ -254,7 +236,7 @@ var blueDie = blueDieResultSet(),
     yellowDie = yellowDieResultSet(),
     byCombinations = blueDie.combine(yellowDie),
     values = byCombinations.values.map(function(r){
-      return r.value.surges || 0; // could use hearts etc.
+      return r.value.hearts || 0; // could use hearts etc.
     }),
     valueCounts = [],
     maxCount;
@@ -269,11 +251,11 @@ values.forEach(function(v){
 
 maxCount = d3.max(valueCounts);
 
-var svg = d3.select('body').append('svg')
+var svgVis = d3.select('#resultset-view').append('svg')
   .attr('height', 500)
   .attr('width', 800);
 
-svg.selectAll('rect')
+svgVis.selectAll('rect')
     .data(valueCounts)
   .enter().append('rect')
     .attr('width', 20)
@@ -285,7 +267,3 @@ svg.selectAll('rect')
 
 
 
-
-</script>
-</body>
-</html>
