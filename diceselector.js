@@ -8,20 +8,19 @@ var rounding = 10;
 
 ///////////////////////////////////////////////////////////////////////////////
 
-var data = ['blue', 'yellow', 'grey'];
 var svgUi = d3.select('#selector-ui').append('svg')
 .attr('width', 400);
 
 ///////////////////////////////////////////////////////////////////////////////
 
-update();
+update(diceSet.getDiceList());
 
 ///////////////////////////////////////////////////////////////////////////////
 
 function diceMenu() {
 
   var menu = svgUi.append('g');
-  var diceOptions = ['Sienna','grey','black','blue','red','yellow'];
+  var diceOptions = ['brown','grey','black','blue','red','yellow'];
 
   menu.append('rect')
     .attr('width', (withHeight + padding) * diceOptions.length + padding)
@@ -43,13 +42,13 @@ function diceMenu() {
     .style('fill', function(d){ return d3.rgb(d).brighter(); })
     .style('stroke', function(d){ return d3.rgb(d).darker(); })
     .on('click', function(d){
-      data.push(d);
+      diceSet.push(d);
       menu.remove();
-      update();
+      update(diceSet.getDiceList());
     });
 }
 
-function update() {
+function update(data) {
   var dice = svgUi.selectAll('rect')
   .data(data);
 
@@ -64,8 +63,8 @@ function update() {
     .style('stroke', function(d){ return d3.rgb(d).darker(); })
     .style('stroke-dasharray', null)
     .on('click', function(d, i){
-      data.splice(i, 1);
-      update();
+      diceSet.remove(i);
+      update(diceSet.getDiceList());
     });
 
   if(data.length < 5) {
