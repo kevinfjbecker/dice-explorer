@@ -20,13 +20,20 @@ function updateChart(resultSet){
     }
   });
 
-  svgVis.selectAll('rect')
-      .data(valueCounts)
-    .enter().append('rect')
+console.log(valueCounts);
+
+  var bars = svgVis.selectAll('rect')
+      .data(valueCounts);
+
+  bars.enter().append('rect')
       .attr('width', 20)
-      .attr('height', function(d){ return d * 20; })
-      .attr('x', function(d,i){ return i * 20; })
-      .attr('y', function(d){ return 220 - (d * 20) ; })
       .style('stroke', 'white')
       .style('fill', 'steelblue');
+
+  bars.attr('height', function(d){ return d * 20; })
+      .attr('x', function(d,i){ return i * 20; })
+      .attr('y', function(d){ return 220 - (d * 20) ; });
+
+  bars.exit().remove();
+
 }

@@ -45,6 +45,7 @@ function diceMenu() {
       diceSet.push(d);
       menu.remove();
       update(diceSet.getDiceList());
+      updateChart(diceSet.getResultSet()); // TODO: pub-sub
     });
 }
 
@@ -65,6 +66,7 @@ function update(data) {
     .on('click', function(d, i){
       diceSet.remove(i);
       update(diceSet.getDiceList());
+      updateChart(diceSet.getResultSet()); // TODO: pub-sub
     });
 
   if(data.length < 5) {

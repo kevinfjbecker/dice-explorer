@@ -1,13 +1,26 @@
 
 var diceSet = (function() {
 
-  var data = ['blue', 'yellow', 'grey'],
-      combinations = blueDieResultSet()
-        .combine(yellowDieResultSet())
-        .combine(grayDieResultSet());
+  var colorMap = {
+        'brown': brownDieResultSet,
+        'grey': grayDieResultSet,
+        'black': blackDieResultSet,
+        'blue': blueDieResultSet,
+        'red': redDieResultSet,
+        'yellow': yellowDieResultSet
+      },
+      data = ['blue', 'yellow', 'grey'];
+ 
 
   function getResultSet() {
-    return combinations;
+    if(data.length === 0) {
+      return new ResultSet([]);
+    }
+    return data.map(function(color){
+        return colorMap[color]();
+      }).reduce(function(prevResultSet, currResultSet){
+        return prevResultSet.combine(currResultSet);
+      })
   }
 
   function getDiceList() {
