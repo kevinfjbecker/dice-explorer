@@ -1,8 +1,8 @@
 
 // (function(){
 
-  var width = 400,
-      height = 250,
+  var width = 340,
+      height = 100,
       svgVis = d3.select('#resultset-view').append('svg')
         .attr('width', width)
         .attr('height', height);
@@ -28,6 +28,9 @@
       }
     });
 
+    // set zero values for undefine indices
+    d3.range(valueCounts.length - 1).forEach(function(i){ valueCounts[i] = valueCounts[i] || 0; });
+
     var countSum = d3.sum(valueCounts),
         valuePercentages = valueCounts.map(function(v){
           return v / countSum;
@@ -41,9 +44,8 @@
         .style('stroke', 'white')
         .style('fill', 'steelblue');
 
-    bars.attr('height', function(d){ return d * 20; })
-        .attr('x', function(d,i){ return i * 20; })
-        .attr("y", function(d) { return y(d); })
+    bars.attr('x', function(d,i){ return i * 20; })
+        .attr("y", function(d,i) { return y(d); })
         .attr("height", function(d) { return height - y(d); });
 
     bars.exit().remove();
