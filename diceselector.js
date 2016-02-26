@@ -9,7 +9,8 @@ var rounding = 10;
 ///////////////////////////////////////////////////////////////////////////////
 
 var svgUi = d3.select('#selector-ui').append('svg')
-.attr('width', 400);
+.attr('width', 340)
+.attr('height', 65);
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -45,6 +46,7 @@ function diceMenu() {
       diceSet.push(d);
       menu.remove();
       update(diceSet.getDiceList());
+      updateChart(diceSet.getResultSet()); // TODO: pub-sub
     });
 }
 
@@ -65,6 +67,7 @@ function update(data) {
     .on('click', function(d, i){
       diceSet.remove(i);
       update(diceSet.getDiceList());
+      updateChart(diceSet.getResultSet()); // TODO: pub-sub
     });
 
   if(data.length < 5) {
