@@ -45,8 +45,8 @@ function diceMenu() {
     .on('click', function(d){
       diceSet.push(d);
       menu.remove();
-      update(diceSet.getDiceList());
-      updateChart(diceSet.getResultSet()); // TODO: pub-sub
+      update(diceSet.getDiceList()); // TODO: pub-sub
+      events.publish('model.update', diceSet.getResultSet()) // TODO: this should come from the model
     });
 }
 
@@ -66,8 +66,8 @@ function update(data) {
     .style('stroke-dasharray', null)
     .on('click', function(d, i){
       diceSet.remove(i);
-      update(diceSet.getDiceList());
-      updateChart(diceSet.getResultSet()); // TODO: pub-sub
+      update(diceSet.getDiceList()); // TODO: pub-sub
+      events.publish('model.update', diceSet.getResultSet()) // TODO: this should come from the model
     });
 
   if(data.length < 5) {

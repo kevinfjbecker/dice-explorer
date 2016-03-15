@@ -1,5 +1,10 @@
 
-// (function(){
+addResultView('#hearts-view', 'hearts');
+addResultView('#range-view', 'range');
+addResultView('#surges-view', 'surges');
+addResultView('#shields-view', 'shields');
+
+function addResultView(pParentElement, pResultType) {
 
   var margin = {top: 20, right: 20, bottom: 30, left: 40},
       width = 340 - margin.left - margin.right,
@@ -20,7 +25,7 @@
       .orient("left")
       .ticks(3, "%");
 
-  var svgVis = d3.select('#resultset-view').append('svg')
+  var svgVis = d3.select(pParentElement).append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
       .append('g')
@@ -33,14 +38,23 @@
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")");
 
+  svgVis.append("text")
+    .attr("y", -10)
+    .attr('x', 10)
+    .attr("dy", ".71em")
+    .text(pResultType);
+
 
   updateChart(diceSet.getResultSet());
 
-
+  events.subscribe('model.update', function(){
+    updateChart(diceSet.getResultSet());
+  });
+  
   function updateChart(resultSet){
 
     var values = resultSet.values.map(function(r){
-          return r.value.hearts || 0; // could use hearts etc.
+          return r.value[pResultType] || 0; // could use hearts etc.
         }),
         valueCounts = [];
 
@@ -63,8 +77,8 @@
     y.domain([0, d3.max(valuePercentages) || 1]);
     x.domain(d3.range(valuePercentages.length));
 
-    d3.select('.x.axis').call(xAxis);
-    d3.select('.y.axis').call(yAxis);
+    svgVis.select('.x.axis').call(xAxis);
+    svgVis.select('.y.axis').call(yAxis);
 
     var bars = svgVis.selectAll('rect')
         .data(valuePercentages);
@@ -82,4 +96,4 @@
 
   }
 
-// }());
+}
