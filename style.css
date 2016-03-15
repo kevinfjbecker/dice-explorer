@@ -2,7 +2,7 @@ rect {
   shape-rendering: optimizeQuality;
 }
 
-.axis {
+text {
   font: 10px sans-serif;
 }
 
