@@ -32,7 +32,7 @@ function yellowDieResultSet () {
     'r0h2s0',
     'r0h2s1',
     'r1h0s1',
-    'r1h0s1',
+    'r1h1s0',
     'r2h1s0',
   ];
   return new ResultSet(values);
