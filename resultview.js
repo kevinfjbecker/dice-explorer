@@ -54,25 +54,9 @@ function addResultView(pParentElement, pResultType) {
   function updateChart(resultSet){
 
     var values = resultSet.values.map(function(r){
-          return r.value[pResultType] || 0; // could use hearts etc.
+          return r.value[pResultType] || 0; 
         }),
-        valueCounts = [];
-
-    values.forEach(function(v){
-      if(!valueCounts[v]){
-        valueCounts[v]=1;
-      }else{
-        valueCounts[v]++;
-      }
-    });
-
-    // set zero values for undefine indices
-    d3.range(valueCounts.length - 1).forEach(function(i){ valueCounts[i] = valueCounts[i] || 0; });
-
-    var countSum = d3.sum(valueCounts),
-        valuePercentages = valueCounts.map(function(v){
-          return v / countSum;
-        });
+        valuePercentages = getCumulativePercentages(values); // getValuePercentages(values);
 
     y.domain([0, d3.max(valuePercentages) || 1]);
     x.domain(d3.range(valuePercentages.length));
@@ -97,3 +81,54 @@ function addResultView(pParentElement, pResultType) {
   }
 
 }
+
+function getValuePercentages(pValues) {
+
+  var valueCounts = getValueCounts(pValues),
+      countSum = pValues.length;
+
+  return valueCounts.map(function(v){
+    return v / countSum;
+  });
+
+}
+
+function getValueCounts(pValues) {
+
+  var valueCounts = [];
+
+  pValues.forEach(function(v){
+    if(!valueCounts[v]){
+      valueCounts[v]=1;
+    }else{
+      valueCounts[v]++;
+    }
+  });
+
+  // set zero values for undefined indices
+  d3.range(valueCounts.length - 1).forEach(function(i){
+    valueCounts[i] = valueCounts[i] || 0;
+  });
+
+  return valueCounts;
+
+}
+
+function getCumulativePercentages(pValues) {
+
+  var valueCounts = getValueCounts(pValues)
+      cumulativeCounts = valueCounts.map(function(){ return 0; }),
+      countSum = pValues.length;
+
+  for(i = 0; i < valueCounts.length; i++) {
+    for(j = i; j < valueCounts.length; j++) {
+      cumulativeCounts[i] += valueCounts[j];
+    }
+  }
+
+  return cumulativeCounts.map(function(v){
+    return v / countSum;
+  });
+
+}
+
