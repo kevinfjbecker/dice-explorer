@@ -8,7 +8,8 @@ function addResultView(pParentElement, pResultType) {
 
   var margin = {top: 20, right: 20, bottom: 30, left: 40},
       width = 340 - margin.left - margin.right,
-      height = 150 - margin.top - margin.bottom;
+      height = 150 - margin.top - margin.bottom,
+      chartMode = 'Probability';
 
   var x = d3.scale.ordinal()
       .rangeRoundBands([0, width], 0.1);
@@ -45,18 +46,30 @@ function addResultView(pParentElement, pResultType) {
     .text(pResultType);
 
 
-  updateChart(diceSet.getResultSet());
+  updateChart(diceSet.getResultSet(), chartMode);
 
   events.subscribe('model.update', function(){
-    updateChart(diceSet.getResultSet());
+    updateChart(diceSet.getResultSet(), chartMode);
+  });
+
+  events.subscribe('chartmode.update', function(a) {
+    chartMode = a.chartMode;
+    console.log(chartMode);
+    updateChart(diceSet.getResultSet(), chartMode);
   });
   
-  function updateChart(resultSet){
+  function updateChart(resultSet, mode){
 
     var values = resultSet.values.map(function(r){
           return r.value[pResultType] || 0; 
         }),
-        valuePercentages = getCumulativePercentages(values); // getValuePercentages(values);
+        valuePercentages;
+
+    if(mode === 'Probability') {
+      valuePercentages = getValuePercentages(values);
+    } else {
+      valuePercentages = getCumulativePercentages(values);
+    }
 
     y.domain([0, d3.max(valuePercentages) || 1]);
     x.domain(d3.range(valuePercentages.length));

@@ -16,3 +16,11 @@ text {
 .x.axis path {
   display: none;
 }
+
+#chart-mode-selector {
+  padding-left: 80px;
+}
+
+#selector-ui {
+	padding-top: 10px;
+}
