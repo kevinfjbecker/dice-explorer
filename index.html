@@ -1,6 +1,16 @@
 <html>
   <head>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Dice Explorer</title>
@@ -8,17 +18,37 @@
   </head>
   <body>
 
-    <div id="selector-ui"></div>
-    <div id="hearts-view"></div>
-    <div id="range-view"></div>
-    <div id="surges-view"></div>
-    <div id="shields-view"></div>
+    <div class="container-fluid">
+
+      <div id="selector-ui"></div>
+
+      <div id="hearts-view"></div>
+      <div id="range-view"></div>
+      <div id="surges-view"></div>
+      <div id="shields-view"></div>
+
+      <div id="chart-mode-selector" class="btn-group" data-toggle="buttons">
+        <label class="btn btn-default active">
+          <input type="radio" name="options" id="option1" autocomplete="off" checked> Probability
+        </label>
+        <label class="btn btn-default">
+          <input type="radio" name="options" id="option2" autocomplete="off"> Cumulative
+        </label>
+      </div>
+
+    </div>
 
     <script src="pubsub.js"></script>
     <script src="resultset.js"></script>
     <script src="dicemodel.js"></script>
     <script src="diceselector.js"></script>
     <script src="resultview.js"></script>
+    
+    <script>
+      $('#chart-mode-selector .btn').click(function(){
+        events.publish('chartmode.update', {chartMode:$(this).text().trim()});
+      })
+    </script>
 
   </body>
 </html>
