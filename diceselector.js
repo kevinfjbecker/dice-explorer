@@ -9,7 +9,7 @@ var rounding = 10;
 ///////////////////////////////////////////////////////////////////////////////
 
 var svgUi = d3.select('#selector-ui').append('svg')
-.attr('width', 340)
+.attr('width', 400)
 .attr('height', 65);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -21,7 +21,7 @@ update(diceSet.getDiceList());
 function diceMenu() {
 
   var menu = svgUi.append('g');
-  var diceOptions = ['brown','grey','black','blue','red','yellow'];
+  var diceOptions = ['brown','grey','black','blue','red','yellow','green'];
 
   menu.append('rect')
     .attr('width', (withHeight + padding) * diceOptions.length + padding)
