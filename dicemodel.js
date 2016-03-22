@@ -7,7 +7,8 @@ var diceSet = (function() {
         'black': blackDieResultSet,
         'blue': blueDieResultSet,
         'red': redDieResultSet,
-        'yellow': yellowDieResultSet
+        'yellow': yellowDieResultSet,
+        'green': greenDieResultSet
       },
       data = ['blue', 'yellow', 'grey'];
  
