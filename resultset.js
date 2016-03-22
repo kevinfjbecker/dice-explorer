@@ -38,6 +38,18 @@ function yellowDieResultSet () {
   return new ResultSet(values);
 }
 
+function greenDieResultSet () {
+  var values = [
+    'r1h1s1',
+    'r1h1s0',
+    'r1h0s1',
+    'r0h1s1',
+    'r0h1s0',
+    'r0h0s1',
+  ];
+  return new ResultSet(values);
+}
+
 function blackDieResultSet () {
   var values = [
     's0',
